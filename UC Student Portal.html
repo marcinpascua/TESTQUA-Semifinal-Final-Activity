@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UCLM - Student Portal</title>
+    <link
+      rel="icon"
+      href="https://uqulenyafyepinfweagp.supabase.co/storage/v1/object/sign/images/icons/teams/UCLM_1739197608922.webp?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJpbWFnZXMvaWNvbnMvdGVhbXMvVUNMTV8xNzM5MTk3NjA4OTIyLndlYnAiLCJpYXQiOjE3MzkxOTc2MTAsImV4cCI6MTc3MDczMzYxMH0.oJtvp3JS5t6OMZv3gFLxdZvRuWO2KZEfNBo7yOdCezU"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+
+  <body
+    class="bg-[url('https://instructure-uploads-apse1.s3.ap-southeast-1.amazonaws.com/account_234870000000000001/attachments/152/uc-login%20ver2-background.jpg')] bg-cover bg-center bg-fixed"
+  >
+    <div class="min-h-screen flex items-center justify-center">
+      <div class="card bg-base-100 w-120 shadow-sm">
+        <div class="card-body">
+          <div class="w-full flex justify-center">
+            <img
+              src="https://instructure-uploads-apse1.s3.ap-southeast-1.amazonaws.com/account_234870000000000001/attachments/188/UC%20logofinal.png"
+              alt="uclm_logo"
+              class="w-45"
+            />
+          </div>
+          <div class="relative w-full mt-3 mb-3 text-gray-500">
+            <h1
+              class="font-bold text-xl absolute -top-4 left-1/2 -translate-x-1/2 bg-white px-2"
+            >
+              Web Portal
+            </h1>
+            <hr />
+          </div>
+          <div
+            role="alert"
+            class="alert alert-error alert-soft hidden"
+            id="error"
+          >
+            <span id="error-text"></span>
+          </div>
+          <form class="flex flex-col" id="login-form">
+            <fieldset class="fieldset">
+              <legend class="fieldset-legend text-sm">Username</legend>
+              <input type="text" name="username" class="input w-full" />
+            </fieldset>
+            <fieldset class="fieldset">
+              <legend class="fieldset-legend text-sm">Password</legend>
+              <input type="text" name="password" class="input w-full" />
+            </fieldset>
+            <div class="w-full mt-5">
+              <input
+                type="submit"
+                value="Login"
+                class="btn btn-outline btn-primary px-10 w-full"
+              />
+            </div>
+          </form>
+          <h1
+            class="w-full text-center text-3xl font-bold hidden"
+            id="login-text"
+          >
+            Logged In Successfully!
+          </h1>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    var attempts = 0;
+    document.querySelector("form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const username = e.target.username.value;
+      const password = e.target.password.value;
+      const errorDiv = document.getElementById("error");
+      const errorText = document.getElementById("error-text");
+
+      //increment attempts
+      document.querySelector("form").addEventListener("submit", () => {
+        attempts++;
+        if (attempts >= 3) {
+          errorText.textContent =
+            "Your account is locked. Contact administrator.";
+          errorDiv.classList.remove("hidden");
+          document.querySelector("input[type='submit']").disabled = true;
+        }
+      });
+
+      //the fields are empty
+      if (username === "" || password === "") {
+        errorText.textContent = "All fields are required.";
+        errorDiv.classList.remove("hidden");
+        return;
+      }
+
+      //password must be at least 8 characters
+      if (password.length < 8) {
+        errorText.textContent = "Password must be at least 8 characters.";
+        errorDiv.classList.remove("hidden");
+        return;
+      }
+
+      //the username or password is incorrect
+      if (username != "24244766" || password != "password") {
+        errorText.textContent = "Invalid login credentials.";
+        console.log("hello");
+        errorDiv.classList.remove("hidden");
+      } else {
+        //successful login
+        alert("Login successful!");
+        const loginForm = document.getElementById("login-form");
+        loginForm.classList.add("hidden");
+        const loginText = document.getElementById("login-text");
+        loginText.classList.remove("hidden");
+        errorDiv.classList.add("hidden");
+      }
+    });
+  </script>
+</html>
